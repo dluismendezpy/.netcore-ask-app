@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AskApp.Data;
 using AskApp.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AskApp.Controllers
 {
@@ -23,6 +24,19 @@ namespace AskApp.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.AskModel.ToListAsync());
+        }
+
+        // GET: AskModels/SearchForm
+        public async Task<IActionResult> SearchForm()
+        {
+            return View();
+        }
+
+        // POST: AskModels/SearchResults
+        public async Task<IActionResult> SearchResults(string SearchPhrase)
+        {
+            return View("Index", await _context.AskModel.Where(
+                i => i.Question.Contains(SearchPhrase)).ToListAsync());
         }
 
         // GET: AskModels/Details/5
@@ -44,6 +58,7 @@ namespace AskApp.Controllers
         }
 
         // GET: AskModels/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
