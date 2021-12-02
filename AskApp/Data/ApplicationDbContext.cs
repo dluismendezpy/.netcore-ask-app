@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using AskApp.Models;
 
 namespace AskApp.Data
 {
@@ -9,5 +10,6 @@ namespace AskApp.Data
             : base(options)
         {
         }
+        public DbSet<AskApp.Models.AskModel> AskModel { get; set; }
     }
 }
